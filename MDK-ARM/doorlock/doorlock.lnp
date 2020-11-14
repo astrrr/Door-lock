@@ -1,5 +1,8 @@
 --cpu Cortex-M7.fp.dp
 "doorlock\startup_stm32f767xx.o"
+"doorlock\ili9341_gfx.o"
+"doorlock\ili9341_stm32_driver.o"
+"doorlock\ili9341_touchscreen.o"
 "doorlock\main.o"
 "doorlock\gpio.o"
 "doorlock\rng.o"
@@ -9,9 +12,6 @@
 "doorlock\usart.o"
 "doorlock\stm32f7xx_it.o"
 "doorlock\stm32f7xx_hal_msp.o"
-"doorlock\ili9341_gfx.o"
-"doorlock\ili9341_stm32_driver.o"
-"doorlock\ili9341_touchscreen.o"
 "doorlock\stm32f7xx_hal_cortex.o"
 "doorlock\stm32f7xx_hal_rng.o"
 "doorlock\stm32f7xx_hal_rcc.o"

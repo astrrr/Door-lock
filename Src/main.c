@@ -308,8 +308,11 @@ static const uint8_t st_key[153600] = {
 char pass_temp[30] = "";
 char password[30]  = "";
 char display_notShow[30];
+char myPassword[] = "12345";
+char clear_temp[10] ="";
 
 uint8_t st_touch;
+uint8_t dutyCycle = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -369,6 +372,10 @@ int main(void)
 
   /* USER CODE END 2 */
 ILI9341_Init();
+
+//HAL_TIM_Base_Start(&htim2);
+
+//HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	
@@ -495,13 +502,36 @@ ILI9341_Init();
 										sprintf(pass_temp,"%s", password);
 										st_touch = 0;
 										
+													if(strcmp(password, myPassword)!=0)
+													{
+														ILI9341_Draw_Image((const char*)st_key, SCREEN_HORIZONTAL_1);
+														ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+														ILI9341_Draw_Text("Password", 20,15, BLACK, 2, WHITE);
+														ILI9341_Draw_Text("incorrect", 20,35, BLACK, 2, WHITE);
+														
+													}
+													else
+													{
+														ILI9341_Draw_Text("True ", 20,30, BLACK, 3, WHITE);
+														HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+														
+														__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 20);
+														HAL_Delay(20);
+														HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+														
+													}
+											
+											HAL_Delay(2000);
+											strcpy(password, clear_temp);
+											strcpy(pass_temp, clear_temp);
+											
 									}
 									
 									//press Cancel
 									else if ((134<x_pos && x_pos <163) && (237 < y_pos && y_pos <257) && (st_touch==1))
 									{	
 											
-											char clear_temp[10] ="";
+											
 											
 											strcpy(password, clear_temp);
 											strcpy(pass_temp, clear_temp);

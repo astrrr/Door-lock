@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F767xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F7xx_HAL_Driver/Inc;../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F7xx/Include;../Drivers/CMSIS/Include;..\ILI9341;..\ILI9341</IncludePath>
+              <IncludePath>../Inc; ../Drivers/STM32F7xx_HAL_Driver/Inc; ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy; ../Drivers/CMSIS/Device/ST/STM32F7xx/Include; ../Drivers/CMSIS/Include; ..\ILI9341; ..\ILI9341</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -393,6 +393,46 @@
           <GroupName>Application/User</GroupName>
           <Files>
             <File>
+              <FileName>5x5_font.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ILI9341\5x5_font.h</FilePath>
+            </File>
+            <File>
+              <FileName>array_TIGER_landscape.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ILI9341\array_TIGER_landscape.h</FilePath>
+            </File>
+            <File>
+              <FileName>ILI9341_GFX.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ILI9341\ILI9341_GFX.c</FilePath>
+            </File>
+            <File>
+              <FileName>ILI9341_GFX.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ILI9341\ILI9341_GFX.h</FilePath>
+            </File>
+            <File>
+              <FileName>ILI9341_STM32_Driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ILI9341\ILI9341_STM32_Driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>ILI9341_STM32_Driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ILI9341\ILI9341_STM32_Driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>ILI9341_Touchscreen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ILI9341\ILI9341_Touchscreen.c</FilePath>
+            </File>
+            <File>
+              <FileName>ILI9341_Touchscreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ILI9341\ILI9341_Touchscreen.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/main.c</FilePath>
@@ -436,46 +476,6 @@
               <FileName>stm32f7xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/stm32f7xx_hal_msp.c</FilePath>
-            </File>
-            <File>
-              <FileName>5x5_font.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\ILI9341\5x5_font.h</FilePath>
-            </File>
-            <File>
-              <FileName>array_TIGER_landscape.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\ILI9341\array_TIGER_landscape.h</FilePath>
-            </File>
-            <File>
-              <FileName>ILI9341_GFX.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\ILI9341\ILI9341_GFX.c</FilePath>
-            </File>
-            <File>
-              <FileName>ILI9341_GFX.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\ILI9341\ILI9341_GFX.h</FilePath>
-            </File>
-            <File>
-              <FileName>ILI9341_STM32_Driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\ILI9341\ILI9341_STM32_Driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>ILI9341_STM32_Driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\ILI9341\ILI9341_STM32_Driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>ILI9341_Touchscreen.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\ILI9341\ILI9341_Touchscreen.c</FilePath>
-            </File>
-            <File>
-              <FileName>ILI9341_Touchscreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\ILI9341\ILI9341_Touchscreen.h</FilePath>
             </File>
           </Files>
         </Group>

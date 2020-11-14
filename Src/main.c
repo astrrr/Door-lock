@@ -306,7 +306,10 @@ static const uint8_t st_key[153600] = {
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 char pass_temp[30] = "";
+char password[30]  = "";
 char display_notShow[30];
+
+uint8_t st_touch;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -386,7 +389,7 @@ ILI9341_Init();
 			
 			if(TP_Touchpad_Pressed())
         {
-					
+							
 							uint16_t x_pos = 0;
 							uint16_t y_pos = 0;
 							
@@ -397,85 +400,112 @@ ILI9341_Init();
 							
 							if(TP_Read_Coordinates(position_array) == TOUCHPAD_DATA_OK)
 							{
+									
 									x_pos = position_array[0];
 									y_pos = position_array[1];					
 									
 									//press 1
-									if((80<x_pos && x_pos <100) && (109 < y_pos && y_pos <127))
+									if((80<x_pos && x_pos <100) && (109 < y_pos && y_pos <127) && (st_touch==1))
 									{
 											strcat(pass_temp,"*");
-											ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
-											
+											strcat(password,"1");
+											st_touch = 0;
 									}
 									
 									//press 2
-									else if ((110<x_pos && x_pos <129) && (114 < y_pos && y_pos <139))
+									else if ((110<x_pos && x_pos <129) && (114 < y_pos && y_pos <139) && (st_touch==1))
 									{
-										 strcat(pass_temp,"*");
+											strcat(pass_temp,"*");
+											strcat(password,"2");
+											st_touch = 0;
 									}
 									
 									//press 3
-									else if ((136<x_pos && x_pos <153) && (128 < y_pos && y_pos <148))
+									else if ((136<x_pos && x_pos <153) && (128 < y_pos && y_pos <148)&& (st_touch==1))
 									{
-										 strcat(pass_temp,"*");
+											strcat(pass_temp,"*");
+											strcat(password,"3");
+											st_touch = 0;
 									}
 									
 									//press 4
-									else if ((80<x_pos && x_pos <103) && (143 < y_pos && y_pos <164))
+									else if ((80<x_pos && x_pos <103) && (143 < y_pos && y_pos <164)&& (st_touch==1))
 									{
-										 strcat(pass_temp,"*");
+											strcat(pass_temp,"*");
+											strcat(password,"4");
+											st_touch = 0;
 									}
 									
 									//press 5
-									else if ((110<x_pos && x_pos <129) && (148 < y_pos && y_pos <165))
+									else if ((110<x_pos && x_pos <129) && (148 < y_pos && y_pos <165)&& (st_touch==1))
 									{
-										 strcat(pass_temp,"*");
+											strcat(pass_temp,"*");
+											strcat(password,"5");
+											st_touch = 0;
 									}
 									
 									//press 6
-									else if ((136<x_pos && x_pos <155) && (150 < y_pos && y_pos <169))
+									else if ((136<x_pos && x_pos <155) && (150 < y_pos && y_pos <169)&& (st_touch==1))
 									{
-										 strcat(pass_temp,"*");
+											strcat(pass_temp,"*");
+											strcat(password,"6");
+											st_touch = 0;
 									}
 									
 									//press 7
-									else if ((84<x_pos && x_pos <105) && (174 < y_pos && y_pos <191))
+									else if ((84<x_pos && x_pos <105) && (174 < y_pos && y_pos <191)&& (st_touch==1))
 									{
-										 strcat(pass_temp,"*");
+											strcat(pass_temp,"*");
+											strcat(password,"7");
+											st_touch = 0;
 									}
 									
 									//press 8
-									else if ((110<x_pos && x_pos <129) && (174 < y_pos && y_pos <192))
+									else if ((111<x_pos && x_pos <127) && (175 < y_pos && y_pos <190)&& (st_touch==1))
 									{
-										 strcat(pass_temp,"*");
+											strcat(pass_temp,"*");
+											strcat(password,"8");
+											st_touch = 0;
 									}
 									
 									//press 9
-									else if ((134<x_pos && x_pos <153) && (174 < y_pos && y_pos <193))
+									else if ((134<x_pos && x_pos <153) && (174 < y_pos && y_pos <193)&& (st_touch==1))
 									{
-										 strcat(pass_temp,"*");
+											strcat(pass_temp,"*");
+											strcat(password,"9");
+											st_touch = 0;
 									}
 									
 									//press 0
-									else if ((113<x_pos && x_pos <129) && (200 < y_pos && y_pos <220))
+									else if ((113<x_pos && x_pos <129) && (200 < y_pos && y_pos <220)&& (st_touch==1))
 									{
-										 strcat(pass_temp,"*");
+											strcat(pass_temp,"*");
+											strcat(password,"0");
+											st_touch = 0;
 									}
 									
 									//press Enter
-									else if ((80<x_pos && x_pos <113) && (229 < y_pos && y_pos <247))
+									else if ((80<x_pos && x_pos <110) && (229 < y_pos && y_pos <247) && (st_touch==1))
 									{
 										 //summit password 
 										//check password
 										//if true -> unlock
 										//false -> lock
+										//then reset value in
+										sprintf(pass_temp,"%s", password);
+										st_touch = 0;
+										
 									}
 									
 									//press Cancel
-									else if ((134<x_pos && x_pos <163) && (237 < y_pos && y_pos <257))
+									else if ((134<x_pos && x_pos <163) && (237 < y_pos && y_pos <257) && (st_touch==1))
 									{	
-											char temp[30] ="Cancel";
-										 sprintf(pass_temp,"%s",temp);
+											
+											char clear_temp[10] ="";
+											
+											strcpy(password, clear_temp);
+											strcpy(pass_temp, clear_temp);
+											st_touch = 0;
 									}
 									
 									ILI9341_Draw_Image((const char*)st_key, SCREEN_HORIZONTAL_1);
@@ -483,6 +513,7 @@ ILI9341_Init();
 									sprintf(display_notShow,"%s",pass_temp);
 									ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
 									ILI9341_Draw_Text(display_notShow, 20,30, BLACK, 3, WHITE);
+									HAL_Delay(50);
 									
 							}
 					
@@ -492,6 +523,7 @@ ILI9341_Init();
 			else
 			{
 				HAL_GPIO_WritePin(GPIOB, LD3_Pin|LD2_Pin, GPIO_PIN_RESET);
+				st_touch = 1;
 			}
 			
 		}

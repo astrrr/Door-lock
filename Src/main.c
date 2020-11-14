@@ -44,6 +44,8 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "stdio.h"
+#include "string.h"
 
 /* USER CODE BEGIN Includes */
 #include "ILI9341_Touchscreen.h"
@@ -303,7 +305,8 @@ static const uint8_t st_key[153600] = {
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+char pass_temp[30] = "";
+char display_notShow[30];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -365,12 +368,134 @@ int main(void)
 ILI9341_Init();
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	
+	// keypad display
 		ILI9341_Draw_Image((const char*)st_key, SCREEN_HORIZONTAL_1);
 		
-		HAL_Delay(5000);
+		HAL_Delay(3000);
+		
   while (1)
   {
-
+		//Example to display's format when you press password
+		ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+		ILI9341_Draw_Text("Enter Password", 20,30, BLACK, 2, WHITE);
+		
+			while(1)
+			{
+			HAL_Delay(20);
+			
+			if(TP_Touchpad_Pressed())
+        {
+					
+							uint16_t x_pos = 0;
+							uint16_t y_pos = 0;
+							
+							
+							HAL_GPIO_WritePin(GPIOB, LD3_Pin|LD2_Pin, GPIO_PIN_SET);
+							
+							uint16_t position_array[2];					
+							
+							if(TP_Read_Coordinates(position_array) == TOUCHPAD_DATA_OK)
+							{
+									x_pos = position_array[0];
+									y_pos = position_array[1];					
+									
+									//press 1
+									if((80<x_pos && x_pos <100) && (109 < y_pos && y_pos <127))
+									{
+											strcat(pass_temp,"*");
+											ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+											
+									}
+									
+									//press 2
+									else if ((110<x_pos && x_pos <129) && (114 < y_pos && y_pos <139))
+									{
+										 strcat(pass_temp,"*");
+									}
+									
+									//press 3
+									else if ((136<x_pos && x_pos <153) && (128 < y_pos && y_pos <148))
+									{
+										 strcat(pass_temp,"*");
+									}
+									
+									//press 4
+									else if ((80<x_pos && x_pos <103) && (143 < y_pos && y_pos <164))
+									{
+										 strcat(pass_temp,"*");
+									}
+									
+									//press 5
+									else if ((110<x_pos && x_pos <129) && (148 < y_pos && y_pos <165))
+									{
+										 strcat(pass_temp,"*");
+									}
+									
+									//press 6
+									else if ((136<x_pos && x_pos <155) && (150 < y_pos && y_pos <169))
+									{
+										 strcat(pass_temp,"*");
+									}
+									
+									//press 7
+									else if ((84<x_pos && x_pos <105) && (174 < y_pos && y_pos <191))
+									{
+										 strcat(pass_temp,"*");
+									}
+									
+									//press 8
+									else if ((110<x_pos && x_pos <129) && (174 < y_pos && y_pos <192))
+									{
+										 strcat(pass_temp,"*");
+									}
+									
+									//press 9
+									else if ((134<x_pos && x_pos <153) && (174 < y_pos && y_pos <193))
+									{
+										 strcat(pass_temp,"*");
+									}
+									
+									//press 0
+									else if ((113<x_pos && x_pos <129) && (200 < y_pos && y_pos <220))
+									{
+										 strcat(pass_temp,"*");
+									}
+									
+									//press Enter
+									else if ((80<x_pos && x_pos <113) && (229 < y_pos && y_pos <247))
+									{
+										 //summit password 
+										//check password
+										//if true -> unlock
+										//false -> lock
+									}
+									
+									//press Cancel
+									else if ((134<x_pos && x_pos <163) && (237 < y_pos && y_pos <257))
+									{	
+											char temp[30] ="Cancel";
+										 sprintf(pass_temp,"%s",temp);
+									}
+									
+									ILI9341_Draw_Image((const char*)st_key, SCREEN_HORIZONTAL_1);
+									//display * 
+									sprintf(display_notShow,"%s",pass_temp);
+									ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+									ILI9341_Draw_Text(display_notShow, 20,30, BLACK, 3, WHITE);
+									
+							}
+					
+					
+					
+        }
+			else
+			{
+				HAL_GPIO_WritePin(GPIOB, LD3_Pin|LD2_Pin, GPIO_PIN_RESET);
+			}
+			
+		}
+		
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */

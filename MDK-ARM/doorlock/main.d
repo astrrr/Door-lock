@@ -39,6 +39,7 @@ doorlock\main.o: ../Inc/spi.h
 doorlock\main.o: ../Inc/tim.h
 doorlock\main.o: ../Inc/usart.h
 doorlock\main.o: ../Inc/gpio.h
+doorlock\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 doorlock\main.o: ..\ILI9341\ILI9341_Touchscreen.h
 doorlock\main.o: ..\ILI9341\ILI9341_STM32_Driver.h
 doorlock\main.o: ..\ILI9341\ILI9341_GFX.h

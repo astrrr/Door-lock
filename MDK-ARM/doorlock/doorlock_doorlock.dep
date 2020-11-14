@@ -1,6 +1,6 @@
 Dependencies for Project 'doorlock', Target 'doorlock': (DO NOT MODIFY !)
 F (startup_stm32f767xx.s)(0x5FACD187)(--cpu Cortex-M7.fp.dp -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_doorlock-IC:\Users\Astr\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\Astr\AppData\Local\Arm\Packs\Keil\STM32F7xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include--pd "__UVISION_VERSION SETA 528" --pd "_RTE_ SETA 1" --pd "STM32F767xx SETA 1"--list startup_stm32f767xx.lst --xref -o doorlock\startup_stm32f767xx.o --depend doorlock\startup_stm32f767xx.d)
-F (../Src/main.c)(0x5FACD446)(--c99 -c --cpu Cortex-M7.fp.dp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ..\ILI9341 -I ..\ILI9341-I.\RTE\_doorlock-IC:\Users\Astr\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\Astr\AppData\Local\Arm\Packs\Keil\STM32F7xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx-o doorlock\main.o --omf_browse doorlock\main.crf --depend doorlock\main.d)
+F (../Src/main.c)(0x5FAF7BF5)(--c99 -c --cpu Cortex-M7.fp.dp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ..\ILI9341 -I ..\ILI9341-I.\RTE\_doorlock-IC:\Users\Astr\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\Astr\AppData\Local\Arm\Packs\Keil\STM32F7xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx-o doorlock\main.o --omf_browse doorlock\main.crf --depend doorlock\main.d)
 I (../Inc/main.h)(0x5FACD184)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h)(0x5FACD101)
 I (../Inc/stm32f7xx_hal_conf.h)(0x5FACD183)
@@ -40,10 +40,11 @@ I (../Inc/spi.h)(0x5FACD182)
 I (../Inc/tim.h)(0x5FACD183)
 I (../Inc/usart.h)(0x5FACD183)
 I (../Inc/gpio.h)(0x5FACD180)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB87F2)
 I (..\ILI9341\ILI9341_Touchscreen.h)(0x5FACD482)
 I (..\ILI9341\ILI9341_STM32_Driver.h)(0x5A181271)
 I (..\ILI9341\ILI9341_GFX.h)(0x5A1815AE)
-F (../Src/gpio.c)(0x5FACD180)(--c99 -c --cpu Cortex-M7.fp.dp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ..\ILI9341 -I ..\ILI9341-I.\RTE\_doorlock-IC:\Users\Astr\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\Astr\AppData\Local\Arm\Packs\Keil\STM32F7xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx-o doorlock\gpio.o --omf_browse doorlock\gpio.crf --depend doorlock\gpio.d)
+F (../Src/gpio.c)(0x5FAF699C)(--c99 -c --cpu Cortex-M7.fp.dp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ..\ILI9341 -I ..\ILI9341-I.\RTE\_doorlock-IC:\Users\Astr\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\Astr\AppData\Local\Arm\Packs\Keil\STM32F7xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx-o doorlock\gpio.o --omf_browse doorlock\gpio.crf --depend doorlock\gpio.d)
 I (../Inc/gpio.h)(0x5FACD180)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h)(0x5FACD101)
 I (../Inc/stm32f7xx_hal_conf.h)(0x5FACD183)

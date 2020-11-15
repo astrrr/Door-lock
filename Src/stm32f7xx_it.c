@@ -83,7 +83,6 @@ void TIM1_UP_TIM10_IRQHandler(void)
 	if(count_time > 10)
 	{
 		count_time = 0;
-		
 	}
   /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 1 */
 
@@ -101,7 +100,6 @@ void EXTI15_10_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_14);
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_15);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */

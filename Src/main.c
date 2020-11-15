@@ -312,7 +312,7 @@ char myPassword[] = "12345";
 char clear_temp[10] ="";
 
 uint8_t st_touch;
-uint8_t dutyCycle = 1;
+
 
 uint16_t count_time;
 uint16_t sts_count = 1;
@@ -327,6 +327,7 @@ uint8_t sts_irq_exti_15 =1;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void limitSwitch(void);
+void pir_light();
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
@@ -403,7 +404,7 @@ ILI9341_Init();
 			{
 			HAL_Delay(20);
 			limitSwitch();
-			
+			pir_light();
 			if(TP_Touchpad_Pressed())
         {
 							
@@ -535,7 +536,7 @@ ILI9341_Init();
 													}
 													else
 													{
-														ILI9341_Draw_Text("True ", 20,30, BLACK, 3, WHITE);
+														ILI9341_Draw_Text("Correct ", 20,30, BLACK, 3, WHITE);
 														HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 														
 														__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 20);
@@ -698,52 +699,24 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			sts_count = 1;
 		}
 	
-		//metal detecter--------------------------------------
+		//metal detecter--------------------------------------Repleace to button unlock
 		if((GPIO_Pin == GPIO_PIN_10) && (sts_irq_exti_10 ==1))
 		{
 				//Buzzer LED LCD
-			ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
-			ILI9341_Draw_Text("Found", 20,15, BLACK, 2, WHITE);
-			ILI9341_Draw_Text("Suspicious", 20,35, BLACK, 2, WHITE);
+		
 														
 														//LED Red PE7 & Buzzer PE12
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
-			HAL_Delay(500);
+				HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+														
+			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 20);
+			HAL_Delay(20);
+			HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_Delay(200);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
 			
 			
-			ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
-			ILI9341_Draw_Text("              ", 20,15, BLACK, 2, WHITE);
-			ILI9341_Draw_Text("              ", 20,35, BLACK, 2, WHITE);
+		
 			sts_irq_exti_10 = 0;
 			
 			
@@ -758,51 +731,58 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	
 		
 		//PIR turn on the Light-----------------------------
-		if(GPIO_Pin == GPIO_PIN_15 && (sts_irq_exti_15 ==1))
-		{
-			HAL_UART_Transmit(&huart3, (uint8_t*)"PIR ok\n\r", strlen("PIR ok\n\r"), 200);
-				//Light
-			HAL_GPIO_WritePin(GPIOG, GPIO_PIN_9, GPIO_PIN_SET);
-			sts_irq_exti_15 = 0;
-		
-				
-		}
-		else
-		{
-				HAL_GPIO_WritePin(GPIOG, GPIO_PIN_9, GPIO_PIN_RESET);
-			
-			sts_irq_exti_15 =1;
-			
-			
-		}
+//		if(GPIO_Pin == GPIO_PIN_15 && (sts_irq_exti_15 ==1))
+//		{
+//			HAL_GPIO_WritePin(GPIOG, GPIO_PIN_9, GPIO_PIN_SET);
+//			ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+//			ILI9341_Draw_Text("Press", 20,15, BLACK, 2, WHITE);
+//			ILI9341_Draw_Text("Button", 20,35, BLACK, 2, WHITE);
+//			HAL_Delay(2000);
+//				ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+//			ILI9341_Draw_Text("              ", 20,15, BLACK, 2, WHITE);
+//			ILI9341_Draw_Text("              ", 20,35, BLACK, 2, WHITE);
+//				//Light
+//			
+//			sts_irq_exti_15 = 0;
+//		
+//				
+//		}
+//		else
+//		{
+//				HAL_GPIO_WritePin(GPIOG, GPIO_PIN_9, GPIO_PIN_RESET);
+//			
+//			sts_irq_exti_15 =1;
+//			
+//			
+//		}
 		
 		
 	
 		
 		//Unlock - Lock button---------------------------------
-		if(GPIO_Pin == GPIO_PIN_14 && (sts_irq_exti_14 ==1))
-		{
-				HAL_UART_Transmit(&huart3, (uint8_t*)"press button\n\r", strlen("press button\n\r"), 200);
+//		if(GPIO_Pin == GPIO_PIN_14 && (sts_irq_exti_14 ==1))
+//		{
+//				HAL_UART_Transmit(&huart3, (uint8_t*)"press button\n\r", strlen("press button\n\r"), 200);
 				//Buzzer LED
 				//Servo 
-			HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-														
-			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 20);
-			HAL_Delay(20);
-			HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
-			HAL_Delay(200);
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+//			HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+//														
+//			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 20);
+//			HAL_Delay(20);
+//			HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+//			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+//			HAL_Delay(200);
+//			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
 			
 			
-			sts_irq_exti_14 = 0;
-		}
-		else
-		{
-				
-			sts_irq_exti_14 =1;
-			
-		}
+//			sts_irq_exti_14 = 0;
+//		}
+//		else
+//		{
+//				
+//			sts_irq_exti_14 =1;
+//			
+//		}
 		
 
 
@@ -887,6 +867,41 @@ void limitSwitch()
 					
 }
 
+
+void pir_light()
+{
+			char pinState[8];
+			
+	
+			sprintf(pinState, "%d\n\r",(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_15)));
+			HAL_UART_Transmit(&huart3, (uint8_t*)pinState, strlen(pinState), 200);
+	
+		if(!(HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_15)))
+		{
+			
+			//HAL_UART_Transmit(&huart3, (uint8_t*)pinState, strlen(pinState), 200);
+			
+			HAL_GPIO_WritePin(GPIOG, GPIO_PIN_9, GPIO_PIN_SET);
+			ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+			ILI9341_Draw_Text("Press", 20,15, BLACK, 2, WHITE);
+			ILI9341_Draw_Text("Button", 20,35, BLACK, 2, WHITE);
+			HAL_Delay(2000);
+				ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+			ILI9341_Draw_Image((const char*)st_key,SCREEN_HORIZONTAL_1);
+					
+			
+		}
+		else
+		{
+					
+			
+				//HAL_UART_Transmit(&huart3, (uint8_t*)pinState, strlen(pinState), 200);
+				HAL_GPIO_WritePin(GPIOG, GPIO_PIN_9, GPIO_PIN_RESET);
+							
+			
+			
+		}
+}
 
 
 /* USER CODE END 4 */

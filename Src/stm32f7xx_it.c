@@ -36,6 +36,7 @@
 #include "stm32f7xx_it.h"
 
 /* USER CODE BEGIN 0 */
+extern uint16_t count_time;
 
 /* USER CODE END 0 */
 
@@ -78,6 +79,12 @@ void TIM1_UP_TIM10_IRQHandler(void)
 
   /* USER CODE END TIM1_UP_TIM10_IRQn 0 */
   HAL_TIM_IRQHandler(&htim1);
+	count_time++;
+	if(count_time > 10)
+	{
+		count_time = 0;
+		
+	}
   /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 1 */
 
   /* USER CODE END TIM1_UP_TIM10_IRQn 1 */

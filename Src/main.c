@@ -313,11 +313,20 @@ char clear_temp[10] ="";
 
 uint8_t st_touch;
 uint8_t dutyCycle = 1;
+
+uint16_t count_time;
+uint16_t sts_count = 1;
+HAL_StatusTypeDef sts;
+
+uint8_t sts_irq_exti_11 =1;
+uint8_t sts_irq_exti_10 =1;
+uint8_t sts_irq_exti_14 =1;
+uint8_t sts_irq_exti_15 =1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-
+void limitSwitch(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
@@ -369,7 +378,7 @@ int main(void)
   MX_TIM2_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
-
+HAL_TIM_Base_Start_IT(&htim1);
   /* USER CODE END 2 */
 ILI9341_Init();
 
@@ -393,6 +402,7 @@ ILI9341_Init();
 			while(1)
 			{
 			HAL_Delay(20);
+			limitSwitch();
 			
 			if(TP_Touchpad_Pressed())
         {
@@ -520,7 +530,8 @@ ILI9341_Init();
 														HAL_Delay(200);
 														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
 														HAL_Delay(200);
-														
+														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+														HAL_Delay(1000);
 													}
 													else
 													{
@@ -535,14 +546,12 @@ ILI9341_Init();
 														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
 														HAL_Delay(200);
 														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
-														HAL_Delay(200);
-														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET);
-														HAL_Delay(200);
+														HAL_Delay(2000);
 													}
 													
 											HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12|GPIO_PIN_8, GPIO_PIN_RESET);
 													
-											HAL_Delay(2000);
+											
 											strcpy(password, clear_temp);
 											strcpy(pass_temp, clear_temp);
 											
@@ -575,6 +584,7 @@ ILI9341_Init();
 			{
 				HAL_GPIO_WritePin(GPIOB, LD3_Pin|LD2_Pin, GPIO_PIN_RESET);
 				st_touch = 1;
+				
 			}
 			
 		}
@@ -664,6 +674,220 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+//	//Limit switch
+		if(GPIO_Pin == GPIO_PIN_11 &&(sts_irq_exti_11 =1))
+		{		
+				
+				
+						sts_count = 0;
+				
+					
+				//timer count then notify by buzzer and LED
+				
+			
+			sts_irq_exti_11 =0;
+		}
+		else
+		{
+				
+			sts_irq_exti_11 =1;	
+			
+			sts_count = 1;
+		}
+	
+		//metal detecter--------------------------------------
+		if((GPIO_Pin == GPIO_PIN_10) && (sts_irq_exti_10 ==1))
+		{
+				//Buzzer LED LCD
+			ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+			ILI9341_Draw_Text("Found", 20,15, BLACK, 2, WHITE);
+			ILI9341_Draw_Text("Suspicious", 20,35, BLACK, 2, WHITE);
+														
+														//LED Red PE7 & Buzzer PE12
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_Delay(100);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+			HAL_Delay(500);
+			
+			
+			ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+			ILI9341_Draw_Text("              ", 20,15, BLACK, 2, WHITE);
+			ILI9341_Draw_Text("              ", 20,35, BLACK, 2, WHITE);
+			sts_irq_exti_10 = 0;
+			
+			
+		}
+		else
+		{
+				
+			
+			sts_irq_exti_10 =1;
+			
+		}
+	
+		
+		//PIR turn on the Light-----------------------------
+		if(GPIO_Pin == GPIO_PIN_15 && (sts_irq_exti_15 ==1))
+		{
+			HAL_UART_Transmit(&huart3, (uint8_t*)"PIR ok\n\r", strlen("PIR ok\n\r"), 200);
+				//Light
+			HAL_GPIO_WritePin(GPIOG, GPIO_PIN_9, GPIO_PIN_SET);
+			sts_irq_exti_15 = 0;
+		
+				
+		}
+		else
+		{
+				HAL_GPIO_WritePin(GPIOG, GPIO_PIN_9, GPIO_PIN_RESET);
+			
+			sts_irq_exti_15 =1;
+			
+			
+		}
+		
+		
+	
+		
+		//Unlock - Lock button---------------------------------
+		if(GPIO_Pin == GPIO_PIN_14 && (sts_irq_exti_14 ==1))
+		{
+				HAL_UART_Transmit(&huart3, (uint8_t*)"press button\n\r", strlen("press button\n\r"), 200);
+				//Buzzer LED
+				//Servo 
+			HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+														
+			__HAL_TIM_SetCompare(&htim2, TIM_CHANNEL_1, 20);
+			HAL_Delay(20);
+			HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+			HAL_Delay(200);
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+			
+			
+			sts_irq_exti_14 = 0;
+		}
+		else
+		{
+				
+			sts_irq_exti_14 =1;
+			
+		}
+		
+
+
+}
+
+void limitSwitch()
+{
+//	char temp_count[16];
+//	sprintf(temp_count ,"%d\n\r",count_time);
+//			HAL_UART_Transmit(&huart3, (uint8_t*)temp_count, strlen(temp_count), 100);
+			
+		if(sts_count == 0 && count_time == 10)
+		{
+				
+							
+							ILI9341_Draw_Image((const char*)st_key, SCREEN_HORIZONTAL_1 );
+							ILI9341_Set_Rotation(SCREEN_VERTICAL_1);
+							ILI9341_Draw_Text("please", 20,15, BLACK, 2, WHITE);
+							ILI9341_Draw_Text("close the door", 20,35, BLACK, 2, WHITE);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+							HAL_Delay(200);
+							HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+							HAL_Delay(200);
+							
+							ILI9341_Draw_Text("               ", 20,15, BLACK, 2, WHITE);
+							ILI9341_Draw_Text("               ", 20,35, BLACK, 2, WHITE);
+							sts_irq_exti_11 = 1;
+							
+							sts_count = 1;
+							
+						
+							
+					}
+		
+					
+}
+
+
 
 /* USER CODE END 4 */
 

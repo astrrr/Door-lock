@@ -509,6 +509,18 @@ ILI9341_Init();
 														ILI9341_Draw_Text("Password", 20,15, BLACK, 2, WHITE);
 														ILI9341_Draw_Text("incorrect", 20,35, BLACK, 2, WHITE);
 														
+														//LED Red PE7 & Buzzer PE12
+														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+														HAL_Delay(200);
+														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+														HAL_Delay(200);
+														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+														HAL_Delay(200);
+														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_RESET);
+														HAL_Delay(200);
+														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12, GPIO_PIN_SET);
+														HAL_Delay(200);
+														
 													}
 													else
 													{
@@ -519,8 +531,17 @@ ILI9341_Init();
 														HAL_Delay(20);
 														HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
 														
+														//LED Green PE8 & Buzzer PE12
+														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_SET);
+														HAL_Delay(200);
+														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8|GPIO_PIN_12, GPIO_PIN_RESET);
+														HAL_Delay(200);
+														HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET);
+														HAL_Delay(200);
 													}
-											
+													
+											HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_12|GPIO_PIN_8, GPIO_PIN_RESET);
+													
 											HAL_Delay(2000);
 											strcpy(password, clear_temp);
 											strcpy(pass_temp, clear_temp);
